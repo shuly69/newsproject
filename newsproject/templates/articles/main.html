@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<style>
+.image-cover {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+</style>
+{% endblock %}
+{% block content %} 
+<main class="main">
+<div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h2>Stay Informed with the Latest News</h2>
+                        <p>Get breaking news, in-depth analysis, and expert opinions on the topics that matter most to you.</p>
+                        
+                            <form class="hero-search" action="search">
+                                {% csrf_token %}
+                                <input type="text" name="search" placeholder="Search for news..." class="search-input">
+                                <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+                            </form>
+            
+                       
+                    </div>
+                    <div class="hero-image">
+                        <div class="hero-placeholder">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Advertising Banner -->
+            <div class="ad-container ad-banner">
+                <div class="ad-placeholder">
+                    <span>Advertisement Space</span>
+                    <small>728x90</small>
+                </div>
+            </div>
+
+            <!-- Featured Articles -->
+            <section class="featured-section">
+                <h3 class="section-title">Featured Stories</h3>
+                <div class="featured-grid">
+                    <article class="featured-article main-featured">
+                        <div class="article-image">
+                            <div class="image-placeholder">
+                                <img src="{{main_news.image.url}}" alt="" >
+                                
+                            </div>
+                            <span class="category-badge">{{main_news.subcategory}}</span>
+                        </div>
+                        <div class="article-content">
+                            <h2>{{main_news.title}}</h2>
+                            <p>{{ main_news.excerpt }}</p>
+                            <div class="article-meta">
+                                <!-- <span class="author">By John Smith</span> -->
+                                <span class="date">{{main_news.published_date|timesince}} ago</span>
+                            </div>
+                            <a href="article/{{main_news.slug}}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                    <div class="featured-sidebar">
+                        {% for article in sides_news %}
+                        <article class="featured-article side-featured">
+                            <div class="article-image">
+                                <div class="image-placeholder">
+                                    <img src="{{article.image.url}}" alt="">
+                                </div>
+                                <span class="category-badge">{{article.subcategory}}</span>
+                            </div>
+                            <div class="article-content">
+                                <h3>{{article.title}}</h3>
+                                <div class="article-meta">
+                                    <span class="date">{{article.published_date|timesince}} ago</span>
+                                </div>
+                                <a href="article/{{article.slug}}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </article>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Latest News Grid -->
+            <section class="latest-section">
+                <div class="section-header">
+                    <h3 class="section-title">Latest News</h3>
+                    <div class="view-toggle">
+                        <button class="toggle-btn active" data-view="grid">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="toggle-btn" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Advertising Sidebar -->
+                <div class="content-layout">
+                    <div class="main-content">
+                        <div class="news-grid" id="newsGrid">
+                            {% for article in other_news %}
+                            <article class="news-card">
+                                <div class="card-image">
+                                    <div class="image-placeholder">
+                                        <img  class="image-cover" src="{{article.image.url}}" alt="">
+                                    </div>
+                                    <span class="category-badge">{{article.subcategory}}</span>
+                                </div>
+                                <div class="card-content">
+                                    <h3>{{article.title}}</h3>
+                                    <p>{{article.excerpt}}</p>
+                                    <div class="card-meta">
+                                        <span class="date">{{article.published_date|timesince}} ago</span>
+                                    </div>
+                                    <a href="article/{{article.slug}}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </article>
+                            {% endfor %}
+
+                           
+                        </div>
+
+                    </div>
+
+                    <!-- Sidebar -->
+                    <aside class="sidebar">
+                        <!-- Advertising Container -->
+                        <div class="ad-container ad-sidebar">
+                            <div class="ad-placeholder">
+                                <span>Advertisement</span>
+                                <small>300x250</small>
+                            </div>
+                        </div>
+
+                        Popular Articles
+                        <div class="sidebar-widget">
+                            <h4>Most Popular</h4>
+                            <div class="popular-list">
+                                <div class="popular-item">
+                                    <span class="popular-number">1</span>
+                                    <div class="popular-content">
+                                        <h5>Breaking: Major Discovery Announced</h5>
+                                        <span class="popular-views">2.3M views</span>
+                                    </div>
+                                </div>
+                                <div class="popular-item">
+                                    <span class="popular-number">2</span>
+                                    <div class="popular-content">
+                                        <h5>Celebrity Interview Goes Viral</h5>
+                                        <span class="popular-views">1.8M views</span>
+                                    </div>
+                                </div>
+                                <div class="popular-item">
+                                    <span class="popular-number">3</span>
+                                    <div class="popular-content">
+                                        <h5>Weather Alert: Storm Approaching</h5>
+                                        <span class="popular-views">1.5M views</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Newsletter Signup -->
+                        <div class="sidebar-widget newsletter-widget">
+                            <h4>Stay Updated</h4>
+                            <p>Get the latest news delivered to your inbox</p>
+                            <form class="newsletter-form">
+                                <input type="email" placeholder="Enter your email" required>
+                                <button type="submit" class="btn btn-primary">Subscribe</button>
+                            </form>
+                        </div>
+
+                        <!-- Another Ad -->
+                        <div class="ad-container ad-sidebar">
+                            <div class="ad-placeholder">
+                                <span>Advertisement</span>
+                                <small>300x600</small>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+<script >
+    document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all functionality
+    initViewToggle();
+   
+});
+
+// View Toggle Functionality (Grid/List)
+function initViewToggle() {
+    
+    const toggleButtons = document.querySelectorAll('.toggle-btn');
+    const newsGrid = document.getElementById('newsGrid');
+    
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const view = this.dataset.view;
+            // Remove active class from all buttons
+            toggleButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Toggle grid/list view
+            if (view === 'list') {
+                newsGrid.classList.add('list-view');
+            } else {
+                newsGrid.classList.remove('list-view');
+            }
+        });
+    });
+}
+</script>
+{% endblock %}

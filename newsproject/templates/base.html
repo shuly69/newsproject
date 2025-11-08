@@ -4,68 +4,152 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}News Project{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'news/css/styles.css' %}">
+    <style>
+        footer {
+            position: relative;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+
+        .logo-link {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
     {% block head %}{% endblock %}
+    {% load split_filter %}
+
 </head>
 <body>
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo">
-                <h1>News Project</h1>
+     <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1><a class="logo-link" href="{% url 'home' %}"> NewsHub</a></h1>
+                </div>
+                
+                <nav class="nav">
+                    <ul class="nav-list">
+                        {% with category_list="news,technology,sport,lifestyle,business,culture" %}
+                        {% for category in category_list|split:"," %}
+                        <li ><a class="{% if category in request.path|split:'/' %} active {% endif %}" href="{% url 'category' category %}">{{category|capfirst}}</a></li>
+                        {% endfor %}
+                        {% endwith %}
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    {% if not request.user.is_authenticated %}
+                    <div id="authButtons">     
+                        <a class="btn btn-outline btn-auth" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                        <a class="btn btn-primary btn-auth" href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a>  
+                    </div>
+                    {% else %}
+                        <a class="btn btn-primary" href="{% url 'create_article' %}" style="height:40px"><i class="fas fa-plus"></i> Write Article</a>
+                         
+                    <div id="userMenu"  >
+                        
+                        <div class="user-menu">
+                            <button class="user-avatar" onclick="toggleUserMenu()" style="height:40px">
+                                <i class="fas fa-user"></i>
+                                <span id="userName">{{ request.user.username }}</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="user-dropdown" id="userDropdown">
+                                <a href="{% url 'dashboard' user_id=user.id %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                                <a href="{% url 'profile' user.id %}"><i class="fas fa-user-edit"></i> Profile</a>
+                                <a href="{% url 'settings' user.id %}"><i class="fas fa-cog"></i> Settings</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="{% url 'logout' %}"" ><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    
+                    <button class="mobile-menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
             </div>
-            <nav class="main-nav">
-                <button class="mobile-menu" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <ul class="nav-list">
-                    <li><a href="{% url 'home' %}" class="nav-link">Home</a></li>
-                    <li><a href="{% url 'categories' %}" class="nav-link">Categories</a></li>
-                    <li><a href="{% url 'latest' %}" class="nav-link">Latest News</a></li>
-                    <li><a href="{% url 'about' %}" class="nav-link">About</a></li>
-                    <li><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
 
-    <main class="main-content">
+    
+  
+     <!-- Breadcrumb -->
+      {% if request.path != '/' %}
+    <nav class="breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb-list">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li class="active">{{breadcrumb}}</li>
+            </ol>
+        </div>
+    </nav>
+    {% endif %}
+    
         {% block content %}
         <!-- Page content goes here -->
         {% endblock %}
-    </main>
 
-    <aside class="sidebar">
-        {% block sidebar %}
-        <!-- Sidebar content goes here -->
-        {% endblock %}
-    </aside>
 
-    <footer class="main-footer">
-        <div class="footer-container">
+   
+
+    <footer class="footer">
+        <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>About Us</h3>
-                    <p>Your trusted source for latest news and updates.</p>
+                    <h4>NewsHub</h4>
+                    <p>Your trusted source for the latest news and updates from around the world.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
                 </div>
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
+                    <h4>Categories</h4>
                     <ul>
-                        <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
-                        <li><a href="{% url 'terms' %}">Terms of Service</a></li>
+                        <li><a href="{% url 'home' %}" class="active">News</a></li>
+                        <li><a href="{% url 'category' 'politics' %}">Politics</a></li>
+                        <li><a href="{% url 'category' 'technology' %}">Technology</a></li>
+                        <li><a href="{% url 'category' 'sport' %}">Sport</a></li>
+                        <li><a href="{% url 'category' 'health' %}">Health</a></li>
+                        <li><a href="{% url 'category' 'business' %}">Business</a></li>
                     </ul>
                 </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="{% url 'about_us' %}">About Us</a></li>
+                        <li><a href="{% url 'contacts' %}">Contact</a></li>
+                        <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'terms_of_service' %}">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get the latest news</p>
+                    <form class="footer-newsletter">
+                        <input type="email" placeholder="Your email">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; {% now "Y" %} News Project. All rights reserved.</p>
-            </div>
+           
         </div>
     </footer>
 
+<script src="{% static 'news/js/nav.js' %}" ></script>
     {% block scripts %}
-    <script src="{% static 'js/main.js' %}"></script>
+    
     {% endblock %}
 </body>
 </html>

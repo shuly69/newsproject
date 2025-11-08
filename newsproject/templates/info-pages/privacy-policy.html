@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'news/css/privacy.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="main privacy-main">
+        <div class="container">
+
+            <!-- Privacy Policy Content -->
+            <div class="policy-content">
+                <header class="policy-header">
+                    <h1><i class="fas fa-shield-alt"></i> Privacy Policy</h1>
+                    <p class="policy-updated">Last Updated: January 1, 2024</p>
+                </header>
+
+                <div class="policy-body">
+                    <section class="policy-section">
+                        <h2>1. Introduction</h2>
+                        <p>NewsHub ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website. Please read this privacy policy carefully.</p>
+                        <p>By using our website, you consent to the data practices described in this policy. If you do not agree with the practices described in this policy, please do not use our services.</p>
+                    </section>
+
+                    <section class="policy-section">
+                        <h2>2. Information We Collect</h2>
+                        
+                        <h3>2.1 Personal Information</h3>
+                        <p>We may collect personal information that you provide directly to us when you:</p>
+                        <ul>
+                            <li>Register an account with us</li>
+                            <li>Subscribe to our newsletter</li>
+                            <li>Contact us through our contact form</li>
+                            <li>Participate in surveys or contests</li>
+                            <li>Create and publish content on our platform</li>
+                        </ul>
+
+                        <h3>2.2 Automatically Collected Information</h3>
+                        <p>When you visit our website, we automatically collect certain information about your device, including:</p>
+                        <ul>
+                            <li>Browser type and version</li>
+                            <li>Operating system</li>
+                            <li>IP address</li>
+                            <li>Pages visited and time spent on pages</li>
+                            <li>Referring website addresses</li>
+                        </ul>
+
+                        <h3>2.3 Cookies and Tracking Technologies</h3>
+                        <p>We use cookies and similar tracking technologies to track activity on our website and hold certain information. Cookies are files with a small amount of data which may include an anonymous unique identifier.</p>
+                    </section>
+
+                    <section class="policy-section">
+                        <h2>3. How We Use Your Information</h2>
+                        <p>We use the information we collect for various purposes:</p>
+                        <ul>
+                            <li>To provide and maintain our service</li>
+                            <li>To notify you about changes to our service</li>
+                            <li>To allow you to participate in interactive features when you choose to do so</li>
+                            <li>To provide customer support</li>
+                            <li>To gather analysis or valuable information so that we can improve our service</li>
+                            <li>To monitor the usage of our service</li>
+                            <li>To detect, prevent and address technical issues</li>
+                            <li>To personalize your experience and deliver content relevant to your interests</li>
+                        </ul>
+                    </section>
+
+                    <section class="policy-section">
+                        <h2>4. Data Security</h2>
+                        <p>We have implemented appropriate technical and organizational security measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction.</p>
+                        <p>However, please note that no method of transmission over the Internet or electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your personal information, we cannot guarantee its absolute security.</p>
+                    </section>
+
+                    <section class="policy-section">
+                        <h2>5. Data Retention</h2>
+                        <p>We will retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law.</p>
+                        <p>When we no longer need your personal information, we will securely delete or anonymize it.</p>
+                    </section>
+
+                    <section class="policy-section">
+                        <h2>6. Your Rights</h2>
+                        <p>Depending on your location, you may have certain rights regarding your personal information:</p>
+                        <ul>
+                            <li>The right to access your personal information</li>
+                            <li>The right to rectify inaccurate data</li>
+                            <li>The right to erasure ("right to be forgotten")</li>
+                            <li>The right to restrict processing</li>
+                            <li>The right to data portability</li>
+                            <li>The right to object to processing</li>
+                            <li>The right to withdraw consent</li>
+                        </ul>
+                        <p>To exercise these rights, please contact us using the information provided in the "Contact Us" section.</p>
+                    </section>
+
+                    <section class="policy-section">
+                        <h2>7. Third-Party Links</h2>
+                        <p>Our website may contain links to third-party websites. We are not responsible for the privacy practices or content of these external sites. We encourage you to read the privacy policies of any third-party sites you visit.</p>
+                    </section>
+
+                    <section class="policy-section">
+                        <h2>8. Children's Privacy</h2>
+                        <p>Our services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.</p>
+                        <p>If you are a parent or guardian and believe that your child has provided us with personal information, please contact us immediately.</p>
+                    </section>
+
+                    <section class="policy-section">
+                        <h2>9. Changes to This Privacy Policy</h2>
+                        <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
+                        <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+                    </section>
+
+                    <section class="policy-section">
+                        <h2>10. Contact Us</h2>
+                        <p>If you have any questions about this Privacy Policy, please contact us:</p>
+                        <ul class="contact-info-list">
+                            <li><strong>Email:</strong> privacy@newshub.com</li>
+                            <li><strong>Phone:</strong> +1 (555) 123-4567</li>
+                            <li><strong>Address:</strong> 123 News Street, New York, NY 10001, United States</li>
+                        </ul>
+                    </section>
+                </div>
+
+                <!-- Policy Footer -->
+                <div class="policy-footer">
+                    <div class="policy-actions">
+                        <a class="btn btn-primary" href="{% url 'contacts' %}">
+                            <i class="fas fa-envelope"></i> Contact Us
+                        </a>
+                        <a class="btn btn-outline" href="{% url 'terms_of_service' %}">
+                            <i class="fas fa-file-contract"></i> Terms of Service
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

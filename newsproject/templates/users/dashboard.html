@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<style>
+    .article-title {
+        font-size: 20px;
+    }
+    
+    .quick-action-card {
+        text-decoration: none;
+        color: inherit;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<!-- Main Content -->
+    <main class="main dashboard-main">
+        <div class="container">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <div class="welcome-section">
+                    <h1>Welcome back, <span id="authorName">{{user.username}} </span>!</h1>
+                    <p>Here's what's happening with your articles today</p>
+                </div>
+                <div class="dashboard-actions">
+                    <a class="btn btn-primary" href="{% url 'create_article' %}"><i class="fas fa-pen-fancy"></i> Write Now</a>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalArticles">0</h3>
+                        <p>Total Articles</p>
+                        <span class="stat-change positive">+2 this week</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalViews">0</h3>
+                        <p>Total Views</p>
+                        <span class="stat-change positive">+15% this week</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalComments">0</h3>
+                        <p>Comments</p>
+                        <span class="stat-change positive">+8 this week</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalLikes">0</h3>
+                        <p>Likes</p>
+                        <span class="stat-change positive">+25 this week</span>
+                    </div>
+                </div>
+            </div>
+<!-- Dashboard Content -->
+<div class="dashboard-content">
+    <!-- Recent Articles -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h2>Recent Articles</h2>
+            
+        </div>
+        <div class="articles-table">
+            <div class="table-header">
+                <div class="table-cell">Title</div>
+                <div class="table-cell">Category</div>
+                <div class="table-cell">Status</div>
+                <div class="table-cell">Date</div>
+                <div class="table-cell">Actions</div>
+            </div>
+            <div class="table-body" id="recentArticlesTable">
+                {% for article in articles %}
+                <div class="table-row">
+                    <div class="table-cell">
+                        <div class="article-title">{{article.title}}</div>
+                    </div>
+                    <div class="table-cell">
+                        <span class="">{{article.subcategory}}</span>
+                    </div>
+                    <div class="table-cell">
+                        <span class="status-badge ">{{article.status}}</span>
+                    </div>
+                    <div class="table-cell">{{article.published_date}}</div>
+                    <div class="table-cell">
+                        <div class="action-buttons">
+                            <a class="btn-icon" href="{% url 'update_article' article_id=article.id %}" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a class="btn-icon" href="{% url 'article_detail' article.slug %}" title="View">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a class="btn-icon" href="{% url 'delete_article' article_id=article.id %}" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+            </div>
+        </div>
+    </div>
+
+                <!-- Quick Actions -->
+                <div class="dashboard-section">
+                    <h2>Quick Actions</h2>
+                    <div class="quick-actions-grid">
+                        <a class="quick-action-card" href="{% url 'create_article' %}">
+                            <div class="action-icon">
+                                <i class="fas fa-pen-fancy"></i>
+                            </div>
+                            <h3>Write Article</h3>
+                            <p>Create a new article and share your thoughts</p>
+                        </a>
+                        <a class="quick-action-card" href="{% url 'settings' user.id %}">
+                            <div class="action-icon">
+                                <i class="fas fa-user-edit"></i>
+                            </div>
+                            <h3>Edit Profile</h3>
+                            <p>Update your author bio and information</p>
+                        </a>
+                        <a class="quick-action-card" href="#">
+                            <div class="action-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h3>View Analytics</h3>
+                            <p>Check detailed performance metrics</p>
+                        </a>
+                       
+                    </div>
+                </div>
+
+                <!-- Performance Chart -->
+                <div class="dashboard-section">
+                    <h2>Performance Overview</h2>
+                    <div class="chart-container">
+                        <canvas id="performanceChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+    </main>
+
+    {% endblock %}
+
+    {% block scripts %}
+    {% endblock %}

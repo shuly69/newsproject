@@ -1,0 +1,15 @@
+asgiref==3.9.1
+Django==4.2.24
+django-debug-toolbar==6.0.0
+django-environ==0.12.0
+django-quill-editor==0.1.42
+django-smart-selects==1.7.2
+django-tinymce==4.1.0
+django-tinymce4-widget==7.1.1
+pillow==11.3.0
+psycopg2-binary==2.9.10
+pyenchant==3.3.0
+python-dotenv==1.1.1
+slugify==0.0.1
+sqlparse==0.5.3
+tzdata==2025.2

@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'news/css/contacts.css' %}">
+{% endblock %}
+
+{% block content %} 
+<main class="main contact-main">
+    <div class="container">
+
+        <!-- Contact Header -->
+        <section class="contact-header">
+            <h1 class="contact-title"><i class="fas fa-envelope"></i> Get in Touch</h1>
+            <p class="contact-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as
+                possible.</p>
+        </section>
+
+        <!-- Contact Section -->
+        <div class="contact-layout">
+            <!-- Contact Form -->
+            <div class="contact-form-section">
+                <h2>Send us a Message</h2>
+                <form class="contact-form" id="contactForm" method="post" action="{% url 'contacts' %}">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName" class="form-label">First Name *</label>
+                            {{form.first_name}}
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" class="form-label">Last Name *</label>
+                            {{form.last_name}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address *</label>
+                        {{form.email}}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Subject *</label>
+                        {{form.subject}}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message *</label>
+                        {{form.message}}
+                    </div>
+                    {% if success %}
+                    <p style="color:green">Thank you, your message has been submitted</p>
+                    {% else %}
+                    {% for error in form.non_field_errors %}
+                    <p class="form-error" style="color:red">{{ error }}</p>
+                    {% endfor %}
+                    {% endif %}
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+                
+
+                <!-- Contact Info -->
+                <div class="contact-info-section">
+                    <h2>Contact Information</h2>
+                    
+                    <div class="contact-info">
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="info-content">
+                                <h3>Address</h3>
+                                <p>123 News Street<br>New York, NY 10001<br>United States</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="info-content">
+                                <h3>Phone</h3>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="info-content">
+                                <h3>Email</h3>
+                                <p>contact@newshub.com</p>
+                                <p>info@newshub.com</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="info-content">
+                                <h3>Business Hours</h3>
+                                <p>Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 4:00 PM<br>Sunday: Closed</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="social-section">
+                        <h3>Follow Us</h3>
+                        <div class="social-links-contact">
+                            <a href="#" class="social-link-contact">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="#" class="social-link-contact">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-link-contact">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link-contact">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="#" class="social-link-contact">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

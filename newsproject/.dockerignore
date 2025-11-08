@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pkl
+*.egg-info/
+*.egg
+
+# Virtualenv
+venv/
+env/
+ENV/
+.venv/
+
+# OS/system
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs and local DB
+*.log
+*.sqlite3
+db.sqlite3
+
+# Secrets and configs
+.env
+.env.*
+
+# Media/static (если собираются отдельно)
+media/
+staticfiles/
+
+# Migrations (опционально, если ты их не коммитишь)
+**/migrations/__pycache__/
+**/migrations/*.pyc
+**/migrations/*.pyo
+

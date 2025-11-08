@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+   <main class="main auth-main">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h1><i class="fas fa-user-plus"></i> Join as Author</h1>
+                        <p>Create your author account to start writing articles</p>
+                    </div>
+
+                    <form class="auth-form" id="registerForm" method="post" >
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="firstName" class="form-label">First Name *</label>
+                            {{form.first_name}}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName" class="form-label">Last Name *</label>
+                            {{form.last_name}}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address *</label>
+                            {{form.email}}
+                            <div class="form-help">We'll use this to verify your account</div>
+                        </div>
+
+                        <div class="form-group">
+                            
+                            <label for="username" class="form-label">Username *</label>
+                            {{form.username}}
+                            <div class="form-help">This will be your public display name</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password *</label>
+                            <div class="password-input-container">
+                                {{form.password1}}
+                                <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength" id="passwordStrength">
+                                <div class="strength-bar">
+                                    <div class="strength-fill" id="strengthFill"></div>
+                                </div>
+                                <span class="strength-text" id="strengthText">Enter a password</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                            <div class="password-input-container">
+                                {{form.password2}}
+                                <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="password-match" id="passwordMatch">
+                                <span class="match-text" id="matchText"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bio" class="form-label">Bio</label>
+                            {{form.bio}}
+                            <div class="form-help">Optional: Brief description of your background</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="specialization" class="form-label">Specialization *</label>
+                            {{form.specialization}}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="website" class="form-label">Website</label>
+                            <input type="url" id="website" class="form-input" placeholder="https://yourwebsite.com">
+                            <div class="form-help">Optional: Your personal or professional website</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="agreeTerms" required>
+                                <span class="checkmark"></span>
+                                I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="newsletter">
+                                <span class="checkmark"></span>
+                                Subscribe to newsletter for writing tips and platform updates
+                            </label>
+                        </div>
+                        {% for error in form.non_field_errors %}
+                        <p class="form-error" style="color:red">{{ error }}</p>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-user-plus"></i> Create Author Account
+                        </button>
+                    </form>
+
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="login.html" class="link">Sign in here</a></p>
+                    </div>
+                </div>
+
+                <!-- Registration Benefits -->
+                <div class="auth-benefits">
+                    <h3>Why Join as an Author?</h3>
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <i class="fas fa-pen-fancy"></i>
+                            <div>
+                                <h4>Write & Publish</h4>
+                                <p>Create engaging articles and reach thousands of readers</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h4>Track Performance</h4>
+                                <p>Monitor your articles' views, engagement, and optiize your content</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h4>Build Audience</h4>
+                                <p>Connect with readers and build your professional reputation</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-award"></i>
+                            <div>
+                                <h4>Expert Recognition</h4>
+                                <p>Showcase your expertise and establish thought leadership</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Proof -->
+                    <div class="social-proof">
+                        <h4>Join Our Community</h4>
+                        <div class="stats-row">
+                            <div class="stat">
+                                <span class="stat-number">500+</span>
+                                <span class="stat-label">Active Authors</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">10K+</span>
+                                <span class="stat-label">Articles Published</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">1M+</span>
+                                <span class="stat-label">Monthly Readers</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+<!-- <script src="{% static 'news/js/auth.js' %}"></script> -->
+<script src="{% static 'news/js/register.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,339 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <style>
+.image-cover {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.button-link {
+            text-decoration: none;
+            color: inherit;
+        }
+</style>
+{% endblock %}
+{% load split_filter %}
+{% block content %}
+
+
+    <!-- Main Content -->
+    <main class="main category-main">
+        <div class="container">
+            <!-- Category Header -->
+            <section class="category-header">
+                <div class="category-info">
+                    <h1 class="category-title">{% if category.name == 'News' %}  {% else %} {{category.name}} {% endif %} News</h1>
+                    <p class="category-description">{{category.description}}</p>
+                </div>
+                <div class="category-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">{{articles.count}}</span>
+                        <span class="stat-label">Articles</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">2.3M</span>
+                        <span class="stat-label">Readers</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Advertising Banner -->
+            <div class="ad-container ad-banner">
+                <div class="ad-placeholder">
+                    <span>Advertisement Space</span>
+                    <small>728x90</small>
+                </div>
+            </div>
+
+            <!-- Filters and Sorting -->
+            <section class="filters-section">
+                <div class="filters-form">
+            <div class="filters-header">
+                        <h3>Filter & Sort</h3>
+                        <div class="view-toggle">
+                            <button class="toggle-btn active" data-view="grid">
+                                <i class="fas fa-th"></i>
+                            </button>
+                            <button class="toggle-btn" data-view="list">
+                                <i class="fas fa-list"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <form action="{% url 'category' category.slug %}" method="get" >
+                    <div class="filters-content">
+                        <div class="filter-group">
+                            <label for="sortBy">Sort by:</label>
+                            <select id="sortBy" class="form-select" name="date">
+                                <option value="latest">Latest</option>
+                                <option value="oldest">Oldest</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="subcategory">Subcategory:</label>
+                            <select id="subcategory" class="form-select" name="subcategory">
+                                <option value="all">All</option>
+                                {% for subcategory in subcategorys %}
+                                <option value="{{subcategory.id}}">{{subcategory.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button class="btn btn-outline" type="submit">
+                            <i class="fas fa-filter"></i> Apply Filters
+                        </button>
+                    </div>
+                    </form>
+                </div>
+                
+                    
+                
+               
+            </section>
+
+            <!-- Content Layout -->
+             
+            <div class="content-layout">
+                
+                <div class="main-content">
+                    {% if articles.count > 0 %}
+                    <!-- Featured Article -->
+                    <section class="featured-article-section">
+                        <h3 class="section-title">Featured Article</h3>
+                        <article class="featured-article-large">
+                            <div class="article-image">
+                                <div class="image-placeholder">
+                                    <img class="" src="{{main_article.image.url}}" alt="" >
+                                </div>
+                                <span class="category-badge">{{main_article.subcategory.name}}</span>
+                            </div>
+                            <div class="article-content">
+                                <h2>{{main_article.title}}</h2>
+                                <p>{{main_article.excerpt}}</p>
+                                <div class="article-meta">
+                                    <span class="author">By John Smith</span>
+                                    <span class="date">2 hours ago</span>
+                                    <span class="views">2.3K views</span>
+                                </div>
+                                <a href="{% url 'article_detail' main_article.slug %}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </article>
+                    </section>
+
+                    <!-- Articles Grid -->
+                     {% if articles.count != 1 %}
+                    <section class="articles-section">
+                        <div class="section-header">
+                            <h3 class="section-title">Latest Technology News</h3>
+                            <div class="pagination-info">
+                               {{lastest_articles.count}}
+                                <span>Showing 1-{% if articles.count > 7 %}6{% else %}{{articles.count}}{%endif%}  of {{articles.count}} articles</span>
+                            </div>
+                        </div>
+                        <div class="news-grid" id="newsGrid">
+                            {% for article in page_obj %}
+                            <article class="news-card">
+                                <div class="card-image">
+                                    <div class="image-placeholder">
+                                        <img class="image-cover" src="{{article.image.url}}" alt="" >
+                                    </div>
+                                    <span class="category-badge">{{article.subcategory.name}}</span>
+                                </div>
+                                <div class="card-content">
+                                    <h3>{{article.title}}</h3>
+                                    <p>{{ article.excerpt }}</p>
+                                    <div class="card-meta">
+                                        <span class="author">{{article.user.username}}</span>
+                                        <span class="date">{{main_news.published_date|timesince}} ago</span>
+                                        <span class="views">1.2K views</span>
+                                    </div>
+                                    <a href="{% url 'article_detail' article.slug %}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </article>
+                            {% endfor %}
+                         
+                        </div>
+
+
+                        <!-- Pagination -->
+                         {% if articles.count > 6 %}
+                        <div class="pagination">
+                            {% if page_obj.has_previous %}
+                            <button class="pagination-btn">
+                                <a class="button-link" href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-chevron-left"></i> Previous</a>
+                            </button>
+                            {% endif %}
+                            <div class="pagination-numbers">
+                                {% for num in page_obj.paginator.page_range %}
+                                    {% if num == page_obj.number %}
+                                <button class="pagination-number active">{{ num }}</button>
+                                    {% elif num <= 3 or num == page_obj.paginator.num_pages %} <button class="pagination-number"
+                                    onclick="location.href='?page={{ num }}'">{{ num }}</button>
+                                    {% elif num == 4 %}
+                                    <span class="pagination-ellipsis">...</span>
+                                    {% endif %}
+                                {% endfor %}
+
+
+
+
+                            </div>
+                            {% if page_obj.has_next %}
+                            <button class="pagination-btn">
+                               <a class="button-link" href="?page={{ page_obj.next_page_number }}">Next <i class="fas fa-chevron-right"></i></a> 
+                            </button>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </section>
+                    {% endif %}
+                    {% endif %}
+                </div>
+                
+
+                <!-- Sidebar -->
+                 
+                <aside class="sidebar">
+                    <!-- Category Navigation -->
+                    <div class="sidebar-widget category-nav">
+                        <h4>Browse Categories</h4>
+                        <ul class="category-list">
+                        <li><a href="{% url 'category' 'news' %}" class="category-link {% if 'news' in request.path|split:'/' %} active {% endif %}">
+                                <i class="fas fa-globe"></i> News
+                                <span class="article-count">342</span>
+                            </a></li>
+                            <li><a href="{% url 'category' 'technology' %}" class="category-link {% if 'technology' in request.path|split:'/' %} active {% endif %}">
+                                <i class="fas fa-microchip"></i> Technology
+                                <span class="article-count">1,247</span>
+                            </a></li>
+                            <li><a href="{% url 'category' 'sport' %}" class="category-link {% if 'sport' in request.path|split:'/' %} active {% endif %}">
+                                <i class="fas fa-football-ball"></i> Sports
+                                <span class="article-count">567</span>
+                            </a></li>
+                            <li><a href="{% url 'category' 'lifestyle' %}" class="category-link {% if 'lifestyle' in request.path|split:'/' %} active {% endif %}">
+                                <i class="fas fa-heartbeat"></i> Lifestyle
+                                <span class="article-count">289</span>
+                            </a></li>
+                            <li><a href="{% url 'category' 'business' %}" class="category-link {% if 'business' in request.path|split:'/' %} active {% endif %}">
+                                <i class="fas fa-chart-line"></i> Business
+                                <span class="article-count">456</span>
+                            </a></li>
+                            <li><a href="{% url 'category' 'culture' %}" class="category-link {% if 'culture' in request.path|split:'/' %} active {% endif %}">
+                                <i class="fas fa-landmark"></i> Culture
+                                <span class="article-count">456</span>
+                            </a></li>
+                            
+                        </ul>
+                    </div>
+
+                    <!-- Advertising Container -->
+                    <div class="ad-container ad-sidebar">
+                        <div class="ad-placeholder">
+                            <span>Advertisement</span>
+                            <small>300x250</small>
+                        </div>
+                    </div>
+
+                    <!-- Trending Articles -->
+                    <!-- <div class="sidebar-widget trending-articles">
+                        <h4>Trending in Technology</h4>
+                        <div class="trending-list">
+                            <div class="trending-item">
+                                <span class="trending-number">1</span>
+                                <div class="trending-content">
+                                    <h5><a href="#">AI Revolution Continues</a></h5>
+                                    <span class="trending-views">15.2K views</span>
+                                </div>
+                            </div>
+                            <div class="trending-item">
+                                <span class="trending-number">2</span>
+                                <div class="trending-content">
+                                    <h5><a href="#">New iPhone Features</a></h5>
+                                    <span class="trending-views">12.8K views</span>
+                                </div>
+                            </div>
+                            <div class="trending-item">
+                                <span class="trending-number">3</span>
+                                <div class="trending-content">
+                                    <h5><a href="#">Cybersecurity Alert</a></h5>
+                                    <span class="trending-views">9.4K views</span>
+                                </div>
+                            </div>
+                            <div class="trending-item">
+                                <span class="trending-number">4</span>
+                                <div class="trending-content">
+                                    <h5><a href="#">5G Network Expansion</a></h5>
+                                    <span class="trending-views">7.6K views</span>
+                                </div>
+                            </div>
+                            <div class="trending-item">
+                                <span class="trending-number">5</span>
+                                <div class="trending-content">
+                                    <h5><a href="#">Quantum Computing</a></h5>
+                                    <span class="trending-views">6.3K views</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- Newsletter Signup -->
+                    <div class="sidebar-widget newsletter-widget">
+                        <h4>Tech Newsletter</h4>
+                        <p>Get the latest technology news and insights delivered to your inbox</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Enter your email" required>
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </form>
+                    </div>
+
+                  
+
+                    <!-- Another Ad -->
+                    <div class="ad-container ad-sidebar">
+                        <div class="ad-placeholder">
+                            <span>Advertisement</span>
+                            <small>300x600</small>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+<script >
+    document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all functionality
+    initViewToggle();
+   
+});
+
+// View Toggle Functionality (Grid/List)
+function initViewToggle() {
+    
+    const toggleButtons = document.querySelectorAll('.toggle-btn');
+    const newsGrid = document.getElementById('newsGrid');
+    
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const view = this.dataset.view;
+            // Remove active class from all buttons
+            toggleButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Toggle grid/list view
+            if (newsGrid) {
+                if (view === 'list') {
+                    newsGrid.classList.add('list-view');
+                } else {
+                    newsGrid.classList.remove('list-view');
+                }
+            }
+            
+        });
+    });
+}
+</script>
+{% endblock %}

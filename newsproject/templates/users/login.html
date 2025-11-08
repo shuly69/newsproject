@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="main auth-main">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h1><i class="fas fa-sign-in-alt"></i> Welcome Back</h1>
+                        <p>Sign in to your author account</p>
+                    </div>
+
+                    <form class="auth-form" id="loginForm" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address *</label>
+                            {{form.username}}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password *</label>
+                            <div class="password-input-container">
+                                {{form.password}}
+                                <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-label">
+                                {{form.remember_me}}
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                        
+                        {% for error in form.non_field_errors %}
+                        <p class="form-error" style="color:red">{{ error }}</p>
+                        {% endfor %}
+
+
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-sign-in-alt"></i> Sign In
+                        </button>
+                    </form>
+
+                    <div class="auth-divider">
+                        <span>or</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button class="btn btn-social btn-google" onclick="loginWithGoogle()">
+                            <i class="fab fa-google"></i> Continue with Google
+                        </button>
+                        <button class="btn btn-social btn-twitter" onclick="loginWithTwitter()">
+                            <i class="fab fa-twitter"></i> Continue with Twitter
+                        </button>
+                    </div>
+
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a href="{% url 'register' %}" class="link">Create one here</a></p>
+                    </div>
+                </div>
+
+                <!-- Login Benefits -->
+                <div class="auth-benefits">
+                    <h3>Access Your Author Dashboard</h3>
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <i class="fas fa-chart-bar"></i>
+                            <div>
+                                <h4>Analytics Dashboard</h4>
+                                <p>Track your article performance and reader engagement</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-edit"></i>
+                            <div>
+                                <h4>Article Management</h4>
+                                <p>Create, edit, and manage all your published content</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-comments"></i>
+                            <div>
+                                <h4>Reader Interaction</h4>
+                                <p>Respond to comments and engage with your audience</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-cog"></i>
+                            <div>
+                                <h4>Account Settings</h4>
+                                <p>Customize your profile and notification preferences</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="quick-stats">
+                        <h4>Your Recent Activity</h4>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-number" id="articlesCount">0</span>
+                                <span class="stat-label">Articles Published</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="viewsCount">0</span>
+                                <span class="stat-label">Total Views</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="commentsCount">0</span>
+                                <span class="stat-label">Comments Received</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+<!-- <script src="{% static 'news/js/auth.js' %}" ></script> -->
+<!-- <script>
+        // Login form functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            initLoginForm();
+            checkExistingUser();
+        });
+
+        function initLoginForm() {
+            const form = document.getElementById('loginForm');
+            form.addEventListener('submit', handleLogin);
+        }
+
+        function checkExistingUser() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn === 'true') {
+                // Redirect to dashboard if already logged in
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            // Load demo user stats if available
+            loadDemoStats();
+        }
+
+        function loadDemoStats() {
+            // Simulate loading user stats
+            setTimeout(() => {
+                document.getElementById('articlesCount').textContent = '12';
+                document.getElementById('viewsCount').textContent = '2.4K';
+                document.getElementById('commentsCount').textContent = '89';
+            }, 1000);
+        }
+
+        
+
+        function resetForm() {
+            const submitBtn = document.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+            submitBtn.disabled = false;
+        }
+
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const toggle = field.parentElement.querySelector('.password-toggle i');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                toggle.className = 'fas fa-eye-slash';
+            } else {
+                field.type = 'password';
+                toggle.className = 'fas fa-eye';
+            }
+        }
+
+        function loginWithGoogle() {
+            
+        }
+
+        function loginWithTwitter() {
+            
+        }
+
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+
+            // Add to page
+            document.body.appendChild(notification);
+
+            // Show notification
+            setTimeout(() => notification.classList.add('show'), 100);
+
+            // Remove notification
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => document.body.removeChild(notification), 300);
+            }, 5000);
+        }
+    </script> -->
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "admin/base.html" %}
+{% block title %} Admin Panel {% endblock %}
+
+{% block branding %}
+  <h1 id="site-name">
+    <a href="{% url 'admin:index' %}">Admin panel for NewsHub</a>
+  </h1>
+{% endblock %}

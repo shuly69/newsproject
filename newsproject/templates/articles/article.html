@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<style>
+    .article-image {
+        max-height: 300px;
+        height: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+ <!-- Breadcrumb -->
+    
+
+    <!-- Main Content -->
+    <main class="main article-main">
+        <div class="container">
+            <div class="article-layout">
+                <!-- Article Content -->
+                <article class="article-content">
+                    <!-- Article Header -->
+                    <header class="article-header">
+                        <div class="article-meta">
+                            <span class="category-badge">{{ article.subcategory }}</span>
+                            <span class="publish-date">{{ article.published_date|timesince}} ago</span>
+                        </div>
+                        <h1 class="article-title">{{ article.title }}</h1>
+                        
+                    
+                    </header>
+
+                    <!-- Article Image -->
+                    <div class="article-image">
+                        <div class="image-placeholder">
+                            <img src="{{article.image.url}}" alt="" >
+                        </div>
+                    </div>
+
+                    <!-- Article Body -->
+                    <div class="article-body">
+                        {{ article.content|safe }}
+                    </div>
+
+                    <!-- Article Footer -->
+                    <footer class="article-footer">
+                        <div class="article-social">
+                            <span class="social-label">Share this article:</span>
+                            <div class="social-buttons">
+                                <button class="social-btn facebook" onclick="shareToSocial('facebook')">
+                                    <i class="fab fa-facebook-f"></i>
+                                </button>
+                                <button class="social-btn twitter" onclick="shareToSocial('twitter')">
+                                    <i class="fab fa-twitter"></i>
+                                </button>
+                                <button class="social-btn linkedin" onclick="shareToSocial('linkedin')">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </button>
+                                <button class="social-btn whatsapp" onclick="shareToSocial('whatsapp')">
+                                    <i class="fab fa-whatsapp"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </footer>
+                </article>
+
+                <!-- Sidebar -->
+                <aside class="article-sidebar">
+                    <!-- Author Bio -->
+                    <div class="sidebar-widget author-bio">
+                        <h4>About the Author</h4>
+                        <div class="author-card">
+                            <div class="author-avatar-large">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="author-info-detailed">
+                                <h5>John Smith</h5>
+                                <p class="author-title">Senior Technology Reporter</p>
+                                <p class="author-description">John has been covering technology and AI for over 10 years, with a focus on emerging technologies and their societal impact.</p>
+                                <div class="author-stats">
+                                    <span class="stat">
+                                        <strong>247</strong> Articles
+                                    </span>
+                                    <span class="stat">
+                                        <strong>1.2M</strong> Followers
+                                    </span>
+                                </div>
+                                <!-- <button class="btn btn-outline btn-sm">Follow</button> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advertising Container -->
+                    <div class="ad-container ad-sidebar">
+                        <div class="ad-placeholder">
+                            <span>Advertisement</span>
+                            <small>300x250</small>
+                        </div>
+                    </div>
+
+                    <!-- Related Articles -->
+                    <div class="sidebar-widget related-articles">
+                        <h4>Related Articles</h4>
+                        <div class="related-list">
+                            <article class="related-item">
+                                <div class="related-image">
+                                    <div class="image-placeholder">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                </div>
+                                <div class="related-content">
+                                    <h5><a href="#">The Future of Machine Learning</a></h5>
+                                    <span class="related-meta">2 days ago</span>
+                                </div>
+                            </article>
+                            <article class="related-item">
+                                <div class="related-image">
+                                    <div class="image-placeholder">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                </div>
+                                <div class="related-content">
+                                    <h5><a href="#">AI Ethics in the Modern World</a></h5>
+                                    <span class="related-meta">1 week ago</span>
+                                </div>
+                            </article>
+                            <article class="related-item">
+                                <div class="related-image">
+                                    <div class="image-placeholder">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                </div>
+                                <div class="related-content">
+                                    <h5><a href="#">Quantum Computing Breakthrough</a></h5>
+                                    <span class="related-meta">2 weeks ago</span>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter Signup -->
+                    <div class="sidebar-widget newsletter-widget">
+                        <h4>Stay Updated</h4>
+                        <p>Get the latest technology news delivered to your inbox</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Enter your email" required>
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </form>
+                    </div>
+
+                    <!-- Another Ad -->
+                    <div class="ad-container ad-sidebar">
+                        <div class="ad-placeholder">
+                            <span>Advertisement</span>
+                            <small>300x600</small>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+        
+        </div>
+    </main>
+{% endblock %}

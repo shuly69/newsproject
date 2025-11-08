@@ -1,0 +1,498 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'news/css/settings.css' %}">
+{% endblock %}
+{% block content %}
+<main class="main settings-main">
+        <div class="container">
+            <div class="settings-container">
+                <!-- Settings Sidebar -->
+                <div class="settings-sidebar">
+                    <h2 class="settings-title">Settings</h2>
+                    <nav class="settings-nav">
+                        <a href="#profile" class="nav-item active" onclick="switchTab(event, 'profile')">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a href="#account" class="nav-item" onclick="switchTab(event, 'account')">
+                            <i class="fas fa-lock"></i> Account Security
+                         </a>
+                        <!-- <a href="#notifications" class="nav-item" onclick="switchTab(event, 'notifications')">
+                            <i class="fas fa-bell"></i> Notifications
+                        </a>
+                        <a href="#privacy" class="nav-item" onclick="switchTab(event, 'privacy')">
+                            <i class="fas fa-shield-alt"></i> Privacy
+                        </a>
+                        <a href="#preferences" class="nav-item" onclick="switchTab(event, 'preferences')">
+                            <i class="fas fa-sliders-h"></i> Preferences
+                        </a> -->
+                        <a href="#advanced" class="nav-item" onclick="switchTab(event, 'advanced')">
+                            <i class="fas fa-cog"></i> Advanced
+                        </a> 
+                    </nav>
+                </div>
+
+                <!-- Settings Content -->
+                <div class="settings-content">
+                    <!-- Profile Settings -->
+                    <div id="profile" class="settings-section active">
+                        <h2 class="section-title">
+                            <i class="fas fa-user"></i> Profile Settings
+                        </h2>
+                        <p class="section-description">Manage your personal information and public profile.</p>
+
+                        <form class="settings-form" id="profileForm" method="POST" action="{% url 'update_settings' user_id %}">
+                            {% csrf_token %}
+                            <div class="form-section-header">
+                                <h3>Personal Information</h3>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">First Name *</label>
+                                    <input type="text" class="form-input" id="firstName" placeholder="Enter your first name" name="first_name" value="{{user.first_name}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Last Name *</label>
+                                    <input type="text" class="form-input" id="lastName" placeholder="Enter your last name" name="last_name" value="{{user.last_name}}" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Email Address *</label>
+                                <input type="email" class="form-input" id="email" placeholder="Enter your email" value="{{user.email}}" required>
+                                <div class="form-help">We'll use this to verify your account</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Username *</label>
+                                <input type="text" class="form-input" id="username" placeholder="Choose a username" value="{{user.username}}" required>
+                                <div class="form-help">This will be your public display name</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Bio</label>
+                                <textarea class="form-textarea" id="bio" rows="4" name="bio" placeholder="Tell us about yourself">{{user.bio}}</textarea>
+                                <div class="form-help">Brief description of your background (max 200 characters)</div>
+                            </div>
+
+                            
+
+                            <div class="form-section-header">
+                                <h3>Professional Information</h3>
+                            </div>
+
+                            
+
+                            <div class="form-group">
+                                <label class="form-label">Specialization</label>
+                                {{form.specialization}}
+                            </div>
+
+                           
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="resetForm()">Cancel</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Account Security Settings -->
+                    <div id="account" class="settings-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-lock"></i> Account Security
+                        </h2>
+                        <p class="section-description">Manage your password and account security settings.</p>
+
+                        <form class="settings-form" id="securityForm" method="POST" action="{% url 'change_password' user_id %}">
+                            {% csrf_token %}
+                            <div class="form-section-header">
+                                <h3>Change Password</h3>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Current Password *</label>
+                                <div class="password-input-container">
+                                    <input type="password" class="form-input" id="currentPassword" name="current_password" required>
+                                    <button type="button" class="password-toggle" onclick="togglePassword('currentPassword')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">New Password *</label>
+                                <div class="password-input-container">
+                                    <input type="password" class="form-input" id="newPassword" name="new_password" required>
+                                    <button type="button" class="password-toggle" onclick="togglePassword('newPassword')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="form-help">Must be at least 8 characters long</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Confirm New Password *</label>
+                                <div class="password-input-container">
+                                    <input type="password" class="form-input" id="confirmPassword" name="confirm_password" required>
+                                    <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- <div class="form-section-header">
+                                <h3>Two-Factor Authentication</h3>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="enable2FA">
+                                    <span class="checkmark"></span>
+                                    Enable Two-Factor Authentication
+                                </label>
+                                <div class="form-help">Add an extra layer of security to your account</div>
+                            </div> -->
+
+                            <!-- <div class="form-section-header">
+                                <h3>Active Sessions</h3>
+                            </div>
+
+                            <div class="sessions-list">
+                                <div class="session-item">
+                                    <div class="session-info">
+                                        <i class="fas fa-laptop"></i>
+                                        <div>
+                                            <strong>Current Session</strong>
+                                            <p>Chrome on Windows • New York, USA</p>
+                                            <small>Last active: Just now</small>
+                                        </div>
+                                    </div>
+                                    <span class="badge active">Active</span>
+                                </div>
+                                <div class="session-item">
+                                    <div class="session-info">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <div>
+                                            <strong>Mobile Device</strong>
+                                            <p>Safari on iOS • New York, USA</p>
+                                            <small>Last active: 2 hours ago</small>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline btn-sm" onclick="revokeSession()">
+                                        <i class="fas fa-times"></i> Revoke
+                                    </button>
+                                </div>
+                            </div> -->
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Notifications Settings
+                    <div id="notifications" class="settings-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-bell"></i> Notification Settings
+                        </h2>
+                        <p class="section-description">Choose how you want to be notified about activities and updates.</p>
+
+                        <form class="settings-form" id="notificationsForm">
+                            <div class="form-section-header">
+                                <h3>Email Notifications</h3>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="emailComments" checked>
+                                    <span class="checkmark"></span>
+                                    New comments on my articles
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="emailLikes" checked>
+                                    <span class="checkmark"></span>
+                                    Article likes and reactions
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="emailFollowers">
+                                    <span class="checkmark"></span>
+                                    New followers
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="emailNewsletter" checked>
+                                    <span class="checkmark"></span>
+                                    Newsletter and platform updates
+                                </label>
+                            </div>
+
+                            <div class="form-section-header">
+                                <h3>Push Notifications</h3>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="pushComments">
+                                    <span class="checkmark"></span>
+                                    New comments
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="pushMentions">
+                                    <span class="checkmark"></span>
+                                    When I'm mentioned
+                                </label>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Privacy Settings -->
+                    <!-- <div id="privacy" class="settings-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-shield-alt"></i> Privacy Settings
+                        </h2>
+                        <p class="section-description">Control who can see your information and content.</p>
+
+                        <form class="settings-form" id="privacyForm">
+                            <div class="form-section-header">
+                                <h3>Profile Visibility</h3>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Who can see your profile?</label>
+                                <select class="form-select" id="profileVisibility">
+                                    <option value="public" selected>Everyone (Public)</option>
+                                    <option value="followers">Followers Only</option>
+                                    <option value="private">Private</option>
+                                </select>
+                            </div> -->
+
+                            <!-- <div class="form-group">
+                                <label class="form-label">Who can send you messages?</label>
+                                <select class="form-select" id="messagePrivacy">
+                                    <option value="everyone" selected>Everyone</option>
+                                    <option value="followers">Followers Only</option>
+                                    <option value="none">No One</option>
+                                </select>
+                            </div>
+
+                            <div class="form-section-header">
+                                <h3>Content Privacy</h3>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="showEmail" checked>
+                                    <span class="checkmark"></span>
+                                    Show email address on profile
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="showLocation">
+                                    <span class="checkmark"></span>
+                                    Show location on profile
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="showWebsite">
+                                    <span class="checkmark"></span>
+                                    Show website on profile
+                                </label>
+                            </div>
+
+                            <div class="form-section-header">
+                                <h3>Data Privacy</h3>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="analyticsOptOut">
+                                    <span class="checkmark"></span>
+                                    Opt out of analytics tracking
+                                </label>
+                                <div class="form-help">Help us improve by sharing usage data (anonymized)</div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div> -->
+
+                    <!-- Preferences Settings -->
+                    <!-- <div id="preferences" class="settings-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-sliders-h"></i> Preferences
+                        </h2>
+                        <p class="section-description">Customize your experience on NewsHub.</p>
+
+                        <form class="settings-form" id="preferencesForm">
+                            <div class="form-section-header">
+                                <h3>Language & Region</h3>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Language</label>
+                                <select class="form-select" id="language">
+                                    <option value="en" selected>English</option>
+                                    <option value="es">Spanish</option>
+                                    <option value="fr">French</option>
+                                    <option value="de">German</option>
+                                    <option value="zh">Chinese</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Time Zone</label>
+                                <select class="form-select" id="timezone">
+                                    <option value="UTC-5">Eastern Time (UTC-5)</option>
+                                    <option value="UTC-6">Central Time (UTC-6)</option>
+                                    <option value="UTC-7">Mountain Time (UTC-7)</option>
+                                    <option value="UTC-8" selected>Pacific Time (UTC-8)</option>
+                                </select>
+                            </div> -->
+<!-- 
+                            <div class="form-section-header">
+                                <h3>Display Settings</h3>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Theme</label>
+                                <select class="form-select" id="theme">
+                                    <option value="light" selected>Light</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="auto">Auto (Follow system)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Articles per Page</label>
+                                <select class="form-select" id="articlesPerPage">
+                                    <option value="10">10</option>
+                                    <option value="20" selected>20</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+
+                            <div class="form-section-header">
+                                <h3>Editor Preferences</h3>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="autoSave">
+                                    <span class="checkmark"></span>
+                                    Auto-save drafts
+                                </label>
+                                <div class="form-help">Automatically save your work while writing</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="spellCheck" checked>
+                                    <span class="checkmark"></span>
+                                    Enable spell checker
+                                </label>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div> --> 
+
+                    <!-- Advanced Settings -->
+                    <div id="advanced" class="settings-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-cog"></i> Advanced Settings
+                        </h2>
+                        <p class="section-description">Advanced options and data management.</p>
+
+                        <!-- <div class="danger-zone">
+                            <div class="form-section-header">
+                                <h3>Export Data</h3>
+                            </div>
+                            <p class="section-description">Download a copy of your data including articles, profile information, and activity history.</p>
+                            <button class="btn btn-outline" onclick="exportData()">
+                                <i class="fas fa-download"></i> Export My Data
+                            </button> -->
+                            
+
+                            
+                            <div class="form-section-header">
+                                <h3>Account Deletion</h3>
+                            </div>
+                            <form action="{% url 'delete_account' user.id %}" method="POST">
+                            {% csrf_token %}
+                            <p class="section-description text-danger">Permanently delete your account and all associated data. This action cannot be undone.</p>
+                            <button type="submit" class="btn btn-danger" onclick="deleteAccount()">
+                                <i class="fas fa-trash"></i> Delete My Account
+                            </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const toggle = field.parentElement.querySelector('.password-toggle i');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                toggle.className = 'fas fa-eye-slash';
+            } else {
+                field.type = 'password';
+                toggle.className = 'fas fa-eye';
+            }
+        }
+
+    function switchTab(event, tabName) {
+            event.preventDefault();
+            
+            // Remove active class from all nav items and sections
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.settings-section').forEach(section => section.classList.remove('active'));
+            
+            // Add active class to clicked nav item
+            event.target.closest('.nav-item').classList.add('active');
+            
+            // Show the corresponding section
+            document.getElementById(tabName).classList.add('active');
+        }
+</script>
+{% endblock %}
