@@ -6,4 +6,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["python", "manage.py" , "runserver", "0.0.0.0:8000"]
+ENV PYTHONUNBUFFERED=1
+
+RUN python manage.py collectstatic --noinput
+
+CMD ["gunicorn", "newsproject.wsgi:application", "--bind", "0.0.0.0:8000"]
+
+
