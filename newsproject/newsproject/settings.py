@@ -32,7 +32,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['https://newsproject-m07i.onrender.com/',]
 
-INTERNAL_IPS = []
+INTERNAL_IPS = [ ]
 
 
 # Application definition
