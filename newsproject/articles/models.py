@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
 from user.models import CustomUser
+from cloudinary.models import CloudinaryField
+
 
 # Create your models here.
 class Articles(models.Model):
@@ -11,7 +13,7 @@ class Articles(models.Model):
     slug = models.SlugField(max_length=100, unique=True, blank=True)
     category = models.ForeignKey('Categories', on_delete=models.CASCADE, related_name='articles')
     subcategory = models.ForeignKey('SubCategories', on_delete=models.CASCADE, related_name='articles', null=True, blank=True)
-    image = models.ImageField(upload_to='article_images/', blank=True, null=True)
+    image = CloudinaryField('image', blank=True, null=True)
     meta_description = models.CharField(max_length=160, blank=True)
     meta_keywords = models.CharField(max_length=255, blank=True)
     status = models.CharField(max_length=10, choices=[('draft', 'Draft'), ('published', 'Published')], default='draft')
