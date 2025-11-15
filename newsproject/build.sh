@@ -3,17 +3,7 @@
 set -e
 
 # Функция ожидания базы данных
-wait_for_db() {
-    echo "Waiting for database..."
-    while ! nc -z $POSTGRES_HOST $POSTGRES_PORT; do
-        sleep 0.5
-        echo "Still waiting for database..."
-    done
-    echo "Database is ready!"
-}
 
-# Ожидаем БД
-wait_for_db
 
 # Применяем миграции
 echo "Applying migrations..."
