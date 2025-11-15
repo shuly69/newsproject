@@ -96,7 +96,7 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST', 'db'),  # or your remote host
+        'HOST': os.getenv('DB_HOST', 'dpg-d4ccdl24d50c73d46mvg-a'),  # or your remote host
         'PORT': '5432',
     }
 }
