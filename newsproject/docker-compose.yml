@@ -26,6 +26,6 @@ services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_DB: news
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 2323
+      - POSTGRES_DB: news
+      - POSTGRES_USER: postgres
+      - POSTGRES_PASSWORD: 2323
