@@ -1,7 +1,11 @@
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: gunicorn newsproject.wsgi:application --config gunicorn_config.py
+
     ports:
       - "10000:10000"
     volumes:

@@ -16,7 +16,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from debug_toolbar.toolbar import debug_toolbar_urls
 import debug_toolbar
 from django.conf import settings
 from django.conf.urls.static import static
@@ -27,7 +26,6 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('articles.urls')),
-    path("__debug__/", include(debug_toolbar.urls)),
     path('user/', include('user.urls')),
     path('contacts/', views.contacts, name='contacts'),
     path('about-us/', views.about_us, name='about_us'),

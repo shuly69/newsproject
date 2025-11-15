@@ -8,8 +8,10 @@ COPY . .
 
 ENV PYTHONUNBUFFERED=1
 
-RUN python manage.py collectstatic --noinput
+RUN python -W ignore::RuntimeWarning manage.py collectstatic --noinput || true
+EXPOSE 10000
 
-CMD ["gunicorn", "newsproject.wsgi:application", "--bind", "0.0.0.0:10000"]
+CMD ["gunicorn", "newsproject.wsgi:application", "--config", "gunicorn_config.py"]
+
 
 
