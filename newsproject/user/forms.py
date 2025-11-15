@@ -1,8 +1,10 @@
 from django import forms
 from .models import CustomUser
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 
-class CustomUserCreationForm(forms.ModelForm):
+
+class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Enter your email', 'id': 'email'}))
     bio = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-textarea', 'placeholder': 'Tell us about yourself', 'rows': 4}))
     username = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Choose a username', 'id': 'username'}))
@@ -21,9 +23,7 @@ class CustomUserAutorizationForm(AuthenticationForm):
     username = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Enter your email', 'id': 'email'}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Enter your password', 'id': 'password'}))
     remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'id': 'rememberMe'}))
-    class Meta:
-        model = CustomUser
-        fields = ['username', 'password', 'remember_me']
+    
 
 
 class UserSettingsForm(forms.ModelForm):
