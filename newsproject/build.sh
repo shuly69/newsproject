@@ -2,14 +2,14 @@
 
 set -e
 
-# Функция ожидания базы данных
 
 
-# Применяем миграции
+
+
 echo "Applying migrations..."
 python manage.py migrate --noinput
 
-# Создаем суперпользователя
+
 echo "Creating superuser..."
 python manage.py shell -c "
 from django.contrib.auth import get_user_model
@@ -21,6 +21,6 @@ else:
     print('Superuser already exists')
 "
 
-# Запускаем сервер
+
 echo "Starting server..."
-exec "$@"
+exec "$@" 
