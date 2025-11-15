@@ -31,7 +31,7 @@ services:
       - POSTGRES_USER=news_96d8_user
       - POSTGRES_PASSWORD=NSJqZ4zldDMgSQgsGl9wVtY3THOnChD8
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user -d mydb"]
+      test: ["CMD-SHELL", "pg_isready -U news_96d8_user -d news_96d8"]
       interval: 10s
       timeout: 5s
       retries: 5
