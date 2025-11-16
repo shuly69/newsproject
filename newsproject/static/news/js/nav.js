@@ -18,9 +18,11 @@ function toggleUserMenu() {
 function initMobileMenu() {
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
     const nav = document.querySelector('.nav');
+    const hidden_menu = document.querySelector('.hidden-mobile-menu');
     
     if (mobileToggle && nav) {
         mobileToggle.addEventListener('click', function() {
+            hidden_menu.classList.toggle('show');
             nav.classList.toggle('mobile-open');
             const icon = this.querySelector('i');
             icon.classList.toggle('fa-bars');

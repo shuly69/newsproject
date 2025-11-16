@@ -3021,6 +3021,12 @@ img {
     display: block;
 }
 
+.show {
+    display: block;
+}
+
+
+
 .user-dropdown a {
     display: flex;
     align-items: center;
