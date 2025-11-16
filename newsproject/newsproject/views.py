@@ -3,7 +3,6 @@ from .forms import ContactForm
 from django.core.mail import send_mail
 def contacts(request):
     breadcrumb = 'Contacts'
-    
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -28,7 +27,7 @@ def contacts(request):
         form = ContactForm()
         # Handle contact form submission logic here
         
-        return render(request, 'info-pages/contacts.html', {'breadcrumb': breadcrumb})
+        return render(request, 'info-pages/contacts.html', {'breadcrumb': breadcrumb, 'form': form})
 
 def about_us(request):
     breadcrumb = 'About Us'
