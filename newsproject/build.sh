@@ -3,7 +3,7 @@
 set -e
 
 echo "Applying migrations..."
-python manage.py makeemigrations
+python manage.py makemigrations
 python manage.py migrate user --noinput
 python manage.py migrate --noinput
 
