@@ -68,6 +68,7 @@
                 <!-- Sidebar -->
                 <aside class="article-sidebar">
                     <!-- Author Bio -->
+                     {% if article.user.name != 'admin' %}
                     <div class="sidebar-widget author-bio">
                         <h4>About the Author</h4>
                         <div class="author-card">
@@ -90,6 +91,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
 
                     <!-- Advertising Container -->
                     <div class="ad-container ad-sidebar">
