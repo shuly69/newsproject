@@ -3025,7 +3025,9 @@ img {
     display: block;
 }
 
-
+.hidden-mobile-menu{
+    display: none;
+}
 
 .user-dropdown a {
     display: flex;
