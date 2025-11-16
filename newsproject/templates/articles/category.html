@@ -111,9 +111,9 @@
                                 <h2>{{main_article.title}}</h2>
                                 <p>{{main_article.excerpt}}</p>
                                 <div class="article-meta">
-                                    <span class="author">By John Smith</span>
-                                    <span class="date">2 hours ago</span>
-                                    <span class="views">2.3K views</span>
+                                    <span class="author">{% if main_article.user != 'admin' %}{{main_article.user.username}}{% endif %}</span>
+                                    <span class="date">{{main_article.published_date|timesince}} ago</span>
+                                    <!-- <span class="views">2.3K views</span> -->
                                 </div>
                                 <a href="{% url 'article_detail' main_article.slug %}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
                             </div>
@@ -143,9 +143,9 @@
                                     <h3>{{article.title}}</h3>
                                     <p>{{ article.excerpt }}</p>
                                     <div class="card-meta">
-                                        <span class="author">{{article.user.username}}</span>
-                                        <span class="date">{{main_news.published_date|timesince}} ago</span>
-                                        <span class="views">1.2K views</span>
+                                        <span class="author">{% if article.user != 'admin' %}{{article.user.username}}{% endif %}</span>
+                                        <span class="date">{{article.published_date|timesince}} ago</span>
+                                        <!-- <span class="views">1.2K views</span> -->
                                     </div>
                                     <a href="{% url 'article_detail' article.slug %}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
                                 </div>
