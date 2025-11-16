@@ -3021,6 +3021,11 @@ img {
     display: block;
 }
 
+.newsletter-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 
 .hidden-mobile-menu{
