@@ -111,7 +111,7 @@
                                 <h2>{{main_article.title}}</h2>
                                 <p>{{main_article.excerpt}}</p>
                                 <div class="article-meta">
-                                    <span class="author">{% if not article.user.is_staff %}{{main_article.user.username}}{% endif %}</span>
+                                    <span class="author">{% if not main_article.user.is_staff %}{{main_article.user.username}}{% endif %}</span>
                                     <span class="date">{{main_article.published_date|timesince}} ago</span>
                                     <!-- <span class="views">2.3K views</span> -->
                                 </div>
