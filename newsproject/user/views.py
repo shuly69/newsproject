@@ -9,8 +9,7 @@ def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.save()
+            form.save()
             return redirect('login')
         else:
             return render(request, 'users/register.html', {'form': form, 'breadcrumb': breadcrumb})
