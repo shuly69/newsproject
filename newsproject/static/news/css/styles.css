@@ -3021,12 +3021,14 @@ img {
     display: block;
 }
 
-.show {
-    display: block;
-}
+
 
 .hidden-mobile-menu{
     display: none;
+}
+
+.show {
+    display: flex;
 }
 
 .user-dropdown a {
