@@ -14,7 +14,7 @@ class CustomUserCreationForm(UserCreationForm):
     password2 = forms.CharField(required=True, label='Confirm Password', widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Confirm your password', 'id': 'confirmPassword'}))
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'bio', 'specialization', 'first_name', 'last_name']
+        fields = ['username', 'email', 'bio', 'specialization', 'first_name', 'last_name', 'password1', 'password2']
         widgets = {
             'specialization': forms.Select(attrs={'class': 'form-select', 'id': 'specialization'}),
         }
