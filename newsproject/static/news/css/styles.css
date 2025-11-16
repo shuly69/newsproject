@@ -117,7 +117,7 @@ body {
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 125px;
+    gap: var(--spacing-md);
 }
 
 /* Buttons */
@@ -138,6 +138,7 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
     font-size: var(--font-size-sm);
+    max-width: 150px;
 }
 
 .btn-primary {
@@ -360,7 +361,7 @@ body {
 }
 
 .side-featured .article-image {
-    height: 120px;
+    
     position: relative;
 }
 
