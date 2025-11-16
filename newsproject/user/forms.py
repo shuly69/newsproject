@@ -23,7 +23,8 @@ class CustomUserAutorizationForm(AuthenticationForm):
     username = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Enter your email', 'id': 'email'}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Enter your password', 'id': 'password'}))
     remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'id': 'rememberMe'}))
-    
+    class Meta:
+        model = CustomUser
 
 
 class UserSettingsForm(forms.ModelForm):
