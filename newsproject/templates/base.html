@@ -20,6 +20,10 @@
             text-decoration: none;
             color: inherit;
         }
+
+        .hidden-mobile-menu {
+            flex-direction: column;
+        }
     </style>
     {% block head %}{% endblock %}
     {% load split_filter %}
@@ -74,6 +78,13 @@
                     
                     <button class="mobile-menu-toggle">
                         <i class="fas fa-bars"></i>
+                        <ul class="nav-list hidden-mobile-menu">
+                        {% with category_list="news,technology,sport,lifestyle,business,culture" %}
+                        {% for category in category_list|split:"," %}
+                        <li ><a class="{% if category in request.path|split:'/' %} active {% endif %}" href="{% url 'category' category %}">{{category|capfirst}}</a></li>
+                        {% endfor %}
+                        {% endwith %}
+                    </ul>
                     </button>
                 </div>
             </div>
