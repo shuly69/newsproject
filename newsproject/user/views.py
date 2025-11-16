@@ -33,7 +33,7 @@ def login(request):
         else:
             return render(request, 'users/login.html', {'form': form, 'breadcrumb': breadcrumb})
     else:
-        form = CustomUserAutorizationForm(request)
+        form = CustomUserAutorizationForm()
         return render(request, 'users/login.html', {'form': form, 'breadcrumb': breadcrumb})
 
 def logout(request):
