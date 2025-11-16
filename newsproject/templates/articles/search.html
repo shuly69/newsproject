@@ -21,9 +21,9 @@
                     </div>
                     <div class="result-content">
                         <h3><a href="article.html?id=${article.title}">{{article.title}}</a></h3>
-                        <p>description</p>
+                        <p>{{article.excerpt}}</p>
                         <div class="result-meta">
-                            <span class="author"><i class="fas fa-user"></i> {% if article.user.name != 'admin' %}{{article.user.username}}{% endif %}</span>
+                            <span class="author"><i class="fas fa-user"></i> {% if not article.user.is_staff %}{{article.user.username}}{% endif %}</span>
                             <span class="date"><i class="fas fa-clock"></i> {{ article.published_date|timesince}} ago</span>
                             <!-- <span class="views"><i class="fas fa-eye"></i> 130 views</span> -->
                         </div>

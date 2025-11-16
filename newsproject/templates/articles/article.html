@@ -68,7 +68,7 @@
                 <!-- Sidebar -->
                 <aside class="article-sidebar">
                     <!-- Author Bio -->
-                     {% if article.user.name != 'admin' %}
+                     {% if not article.user.is_staff %}
                     <div class="sidebar-widget author-bio">
                         <h4>About the Author</h4>
                         <div class="author-card">
@@ -76,9 +76,9 @@
                                 <i class="fas fa-user"></i>
                             </div>
                             <div class="author-info-detailed">
-                                <h5>John Smith</h5>
-                                <p class="author-title">Senior Technology Reporter</p>
-                                <p class="author-description">John has been covering technology and AI for over 10 years, with a focus on emerging technologies and their societal impact.</p>
+                                <h5>{{article.user.name}}</h5>
+                                <p class="author-title">Senior {{article.user.specialization}} Reporter</p>
+                                <p class="author-description">{{article.user.bio}}</p>
                                 <div class="author-stats">
                                     <span class="stat">
                                         <strong>247</strong> Articles

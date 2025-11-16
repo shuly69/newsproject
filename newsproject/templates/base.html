@@ -117,12 +117,11 @@
                 <div class="footer-section">
                     <h4>Categories</h4>
                     <ul>
-                        <li><a href="{% url 'home' %}" class="active">News</a></li>
-                        <li><a href="{% url 'category' 'politics' %}">Politics</a></li>
-                        <li><a href="{% url 'category' 'technology' %}">Technology</a></li>
-                        <li><a href="{% url 'category' 'sport' %}">Sport</a></li>
-                        <li><a href="{% url 'category' 'health' %}">Health</a></li>
-                        <li><a href="{% url 'category' 'business' %}">Business</a></li>
+                        {% with category_list="news,technology,sport,lifestyle,business,culture" %}
+                        {% for category in category_list|split:"," %}
+                        <li ><a  href="{% url 'category' category %}">{{category|capfirst}}</a></li>
+                        {% endfor %}
+                        {% endwith %}
                     </ul>
                 </div>
                 <div class="footer-section">
