@@ -143,7 +143,7 @@
                                     <h3>{{article.title}}</h3>
                                     <p>{{ article.excerpt }}</p>
                                     <div class="card-meta">
-                                        <span class="author">{% if not article.user.name.is_staff %}{{article.user.username}}{% endif %}</span>
+                                        <span class="author">{% if not article.user.is_staff %}{{article.user.username}}{% endif %}</span>
                                         <span class="date">{{article.published_date|timesince}} ago</span>
                                         <!-- <span class="views">1.2K views</span> -->
                                     </div>
