@@ -16,10 +16,10 @@ class CustomUser(AbstractUser):
         ('news', 'News'),
         ('business', 'Business'),
     ], blank=True, null=True)
-    avatar = CloudinaryField('image', blank=True, null=True)
+    
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
-    
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
