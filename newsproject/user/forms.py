@@ -19,6 +19,18 @@ class CustomUserCreationForm(UserCreationForm):
             'specialization': forms.Select(attrs={'class': 'form-select', 'id': 'specialization'}),
         }
 
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email']
+        user.bio = self.cleaned_data.get('bio', '')
+        user.specialization = self.cleaned_data.get('specialization')
+        user.first_name = self.cleaned_data.get('first_name', '')
+        user.last_name = self.cleaned_data.get('last_name', '')
+        if commit:
+            user.save()
+            return user
+
+
 class CustomUserAutorizationForm(AuthenticationForm):
     username = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Enter your email', 'id': 'email'}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Enter your password', 'id': 'password'}))
