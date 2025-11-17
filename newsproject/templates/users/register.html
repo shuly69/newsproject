@@ -96,6 +96,10 @@
                                 Subscribe to newsletter for writing tips and platform updates
                             </label>
                         </div>
+                        {% for error in field.errors %}
+                        <li>{{ field.label }}: {{ error }}</li>
+                        {% endfor %}
+
                         {% for error in form.non_field_errors %}
                         <p class="form-error" style="color:red">{{ error }}</p>
                         {% endfor %}
