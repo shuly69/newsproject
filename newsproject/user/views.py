@@ -9,7 +9,9 @@ def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            raw_password = form.cleaned_data['password1']
+            user.set_password(raw_password) 
             return redirect('login')
         else:
             return render(request, 'users/register.html', {'form': form, 'breadcrumb': breadcrumb})
