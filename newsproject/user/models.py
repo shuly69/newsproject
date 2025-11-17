@@ -19,7 +19,7 @@ class CustomUser(AbstractUser):
     avatar = CloudinaryField('image', blank=True, null=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
-    username = models.CharField(max_length=150, unique=True)
+    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
