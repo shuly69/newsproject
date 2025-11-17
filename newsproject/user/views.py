@@ -7,7 +7,7 @@ from articles.models import Articles as Article
 def register(request):
     breadcrumb = 'Register'
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = CustomUserCreationForm(request, data=request.POST)
         if form.is_valid():
             form.save()
             return redirect('login')
