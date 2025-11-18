@@ -62,7 +62,6 @@
                         </div>
                     </div>
                     <form action="{% url 'category' category.slug %}" method="get" >
-                        {% csrf_token %}
                     <div class="filters-content">
                         <div class="filter-group">
                             <label for="sortBy">Sort by:</label>

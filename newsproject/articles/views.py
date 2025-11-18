@@ -49,6 +49,7 @@ def get_category(request, slug):
     articles = Articles.objects.filter(category=category).order_by(date_filter) 
     if request.GET.get('date') == 'oldest' :
         date_filter = 'published_date'
+        articles = Articles.objects.filter(category=category).order_by(date_filter)
     if request.GET.get('subcategory') and request.GET.get('subcategory') != 'all':
         subcategory_id = request.GET.get('subcategory')
         articles = Articles.objects.filter(subcategory__id=subcategory_id ).order_by(date_filter)  
