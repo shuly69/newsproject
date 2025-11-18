@@ -13,11 +13,12 @@
                 {{results.count}} results found for "{{query}}"
                 {% for article in results %}
                 <article class="result-card">
-                    <div class="result-image">
+                    <div class="result-image"> 
                         <div class="image-placeholder">
                             <img src="{{article.image.url}}" alt="" >
+
                         </div>
-                        <span class="category-badge">${article.category}</span>
+                        <span class="category-badge">{{article.category.name}}</span>
                     </div>
                     <div class="result-content">
                         <h3><a href="article.html?id=${article.title}">{{article.title}}</a></h3>
