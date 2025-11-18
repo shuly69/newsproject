@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 
 
-class CustomUserCreationForm(UserCreationForm):
+class CustomUserCreationForm(forms.ModelForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Enter your email', 'id': 'email'}))
     bio = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-textarea', 'placeholder': 'Tell us about yourself', 'rows': 4}))
     username = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Choose a username', 'id': 'username'}))
