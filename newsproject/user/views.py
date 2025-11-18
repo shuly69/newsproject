@@ -10,8 +10,7 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            raw_password = form.cleaned_data['password1']
-            user.set_password(raw_password) 
+            user.password = form.cleaned_data['password1']
             return redirect('login')
         else:
             return render(request, 'users/register.html', {'form': form, 'breadcrumb': breadcrumb})
