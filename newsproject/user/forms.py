@@ -21,14 +21,11 @@ class CustomUserCreationForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.email = self.cleaned_data['email']
-        user.bio = self.cleaned_data.get('bio', '')
-        user.specialization = self.cleaned_data.get('specialization')
-        user.first_name = self.cleaned_data.get('first_name', '')
-        user.last_name = self.cleaned_data.get('last_name', '')
+        user.set_password(self.cleaned_data['password']) 
         if commit:
             user.save()
-            return user
+        return user
+
 
 
 class CustomUserAutorizationForm(AuthenticationForm):
