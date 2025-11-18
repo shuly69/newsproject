@@ -124,48 +124,8 @@
 
 {% block scripts %}
 <!-- <script src="{% static 'news/js/auth.js' %}" ></script> -->
-<!-- <script>
-        // Login form functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            initLoginForm();
-            checkExistingUser();
-        });
-
-        function initLoginForm() {
-            const form = document.getElementById('loginForm');
-            form.addEventListener('submit', handleLogin);
-        }
-
-        function checkExistingUser() {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            if (isLoggedIn === 'true') {
-                // Redirect to dashboard if already logged in
-                window.location.href = 'dashboard.html';
-                return;
-            }
-
-            // Load demo user stats if available
-            loadDemoStats();
-        }
-
-        function loadDemoStats() {
-            // Simulate loading user stats
-            setTimeout(() => {
-                document.getElementById('articlesCount').textContent = '12';
-                document.getElementById('viewsCount').textContent = '2.4K';
-                document.getElementById('commentsCount').textContent = '89';
-            }, 1000);
-        }
-
-        
-
-        function resetForm() {
-            const submitBtn = document.querySelector('button[type="submit"]');
-            submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
-            submitBtn.disabled = false;
-        }
-
-        function togglePassword(fieldId) {
+ <script>
+    function togglePassword(fieldId) {
             const field = document.getElementById(fieldId);
             const toggle = field.parentElement.querySelector('.password-toggle i');
             
@@ -177,35 +137,6 @@
                 toggle.className = 'fas fa-eye';
             }
         }
+ </script>
 
-        function loginWithGoogle() {
-            
-        }
-
-        function loginWithTwitter() {
-            
-        }
-
-        function showNotification(message, type) {
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
-            notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-                <span>${message}</span>
-            `;
-
-            // Add to page
-            document.body.appendChild(notification);
-
-            // Show notification
-            setTimeout(() => notification.classList.add('show'), 100);
-
-            // Remove notification
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => document.body.removeChild(notification), 300);
-            }, 5000);
-        }
-    </script> -->
 {% endblock %}
